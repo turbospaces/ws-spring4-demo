@@ -19,10 +19,42 @@
     <script src="${urlBase}/webjars/jquery/${jqueryVersion}/jquery.min.js"></script>
     <script src="${urlBase}/webjars/bootstrap/${bootstrapVersion}/js/bootstrap.min.js"></script>
     <script src="${urlBase}/webjars/sockjs-client/${sockjsVersion}/sockjs.min.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Welcome to SockJS test</h1>
+        
+        <p>
+           <table class="table table-bordered table-hover">
+             <thead>
+                <tr>
+                  <th>library</th>
+                  <th>version</th>
+                </tr>
+             </thead>
+             <tbody>
+                <tr>
+                  <td>sock-js</td>
+                  <td>${sockjsVersion}</td>
+                </tr>
+                <tr>
+                  <td>jquery-js</td>
+                  <td>${jqueryVersion}</td>
+                </tr>
+                <tr>
+                  <td>bootrstap</td>
+                  <td>${bootstrapVersion}</td>
+                </tr>
+             </tbody>
+           </table>
+        </p>
+        <p>
+           <blockquote>
+             <p>system will automatically make deposite for you upon WS connection, see response below</p>
+           </blockquote>
+           <pre class="prettyprint lang-json" id="pre-resp"></pre>
+        </p>
     </div>
      <script type="text/javascript">
      $(document).ready(function () {
@@ -32,14 +64,17 @@
     	       
     	       var req = {
     	          qualifier: 'com.turbospaces.api.DepositeRequest',
-    	    	  correlationId: '${uuid}',
-    	    	  data: {}
+    	    	  correlationId: new Date().getTime().toString(),
+    	    	  data: {
+    	    		  balance : 23.34
+    	    	  }
     	       };
     	       
     	       sock.send(JSON.stringify(req));
     	 };
     	 sock.onmessage = function(e) {
     	       console.log('message', e.data);
+    	       $("#pre-resp").text( JSON.stringify(JSON.parse( e.data ), null, 4) );    	           	      
     	 };
     	 sock.onclose = function() {
     	       console.log('ws-close');
