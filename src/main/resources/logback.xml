@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false" debug="true">
+    <appender name="RootConsoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS}|%p|%c{25}|%t|%m%n</pattern>
+            <immediateFlush>true</immediateFlush>
+            <outputPatternAsHeader>true</outputPatternAsHeader>
+        </encoder>
+    </appender>
+     <logger name="org.springframework.web">
+        <level value="DEBUG" />
+    </logger>
+
+    <logger name="org.springframework.web.socket">
+        <level value="DEBUG" />
+    </logger>
+    <root>
+        <level value="DEBUG" />
+        <appender-ref ref="RootConsoleAppender" />
+    </root>
+</configuration>
